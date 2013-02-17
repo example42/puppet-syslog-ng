@@ -74,14 +74,14 @@ class syslog-ng::params {
   }
 
   $log_dir = $::operatingsystem ? {
-    default => '/var/log/syslog-ng',
+    default => '',
   }
 
   $log_file = $::operatingsystem ? {
-    default => '/var/log/syslog-ng/syslog-ng.log',
+    default => '',
   }
 
-  $port = '42'
+  $port = ''
   $protocol = 'tcp'
 
   # General Settings
