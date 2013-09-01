@@ -128,7 +128,7 @@
 # [*noops*]
 #   Set noop metaparameter to true for all the resources managed by the module.
 #   Basically you can run a dryrun for this specific module if you set
-#   this to true. Default: false
+#   this to true. Default: undef
 #
 # Default class params - As defined in syslog-ng::params.
 # Note that these variables are mostly defined and used in the module itself,
@@ -253,7 +253,6 @@ class syslog-ng (
   $bool_firewall=any2bool($firewall)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
-  $bool_noops=any2bool($noops)
 
   ### Definition of some variables used in the module
   $manage_package = $syslog-ng::bool_absent ? {
@@ -328,7 +327,7 @@ class syslog-ng (
   ### Managed resources
   package { $syslog-ng::package:
     ensure  => $syslog-ng::manage_package,
-    noop    => $syslog-ng::bool_noops,
+    noop    => $syslog-ng::noops,
   }
 
   service { 'syslog-ng':
@@ -338,7 +337,7 @@ class syslog-ng (
     hasstatus  => $syslog-ng::service_status,
     pattern    => $syslog-ng::process,
     require    => Package[$syslog-ng::package],
-    noop       => $syslog-ng::bool_noops,
+    noop       => $syslog-ng::noops,
   }
 
   file { 'syslog-ng.conf':
@@ -353,7 +352,7 @@ class syslog-ng (
     content => $syslog-ng::manage_file_content,
     replace => $syslog-ng::manage_file_replace,
     audit   => $syslog-ng::manage_audit,
-    noop    => $syslog-ng::bool_noops,
+    noop    => $syslog-ng::noops,
   }
 
   # The whole syslog-ng configuration directory can be recursively overriden
@@ -369,7 +368,7 @@ class syslog-ng (
       force   => $syslog-ng::bool_source_dir_purge,
       replace => $syslog-ng::manage_file_replace,
       audit   => $syslog-ng::manage_audit,
-      noop    => $syslog-ng::bool_noops,
+      noop    => $syslog-ng::noops,
     }
   }
 
@@ -387,7 +386,7 @@ class syslog-ng (
       ensure    => $syslog-ng::manage_file,
       variables => $classvars,
       helper    => $syslog-ng::puppi_helper,
-      noop      => $syslog-ng::bool_noops,
+      noop      => $syslog-ng::noops,
     }
   }
 
@@ -401,7 +400,7 @@ class syslog-ng (
         target   => $syslog-ng::monitor_target,
         tool     => $syslog-ng::monitor_tool,
         enable   => $syslog-ng::manage_monitor,
-        noop     => $syslog-ng::bool_noops,
+        noop     => $syslog-ng::noops,
       }
     }
     if $syslog-ng::service != '' {
@@ -413,7 +412,7 @@ class syslog-ng (
         argument => $syslog-ng::process_args,
         tool     => $syslog-ng::monitor_tool,
         enable   => $syslog-ng::manage_monitor,
-        noop     => $syslog-ng::bool_noops,
+        noop     => $syslog-ng::noops,
       }
     }
   }
@@ -430,7 +429,7 @@ class syslog-ng (
       direction   => 'input',
       tool        => $syslog-ng::firewall_tool,
       enable      => $syslog-ng::manage_firewall,
-      noop        => $syslog-ng::bool_noops,
+      noop        => $syslog-ng::noops,
     }
   }
 
@@ -444,7 +443,7 @@ class syslog-ng (
       owner   => 'root',
       group   => 'root',
       content => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
-      noop    => $syslog-ng::bool_noops,
+      noop    => $syslog-ng::noops,
     }
   }
 
