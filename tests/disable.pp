@@ -1,5 +1,5 @@
 # Class' service disabling
 #
-class { 'syslog-ng':
+class { 'syslogng':
   disable => true,
 }

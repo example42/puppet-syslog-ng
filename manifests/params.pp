@@ -1,18 +1,18 @@
-# Class: syslog-ng::params
+# Class: syslogng::params
 #
-# This class defines default parameters used by the main module class syslog-ng
+# This class defines default parameters used by the main module class syslogng
 # Operating Systems differences in names and paths are addressed here
 #
 # == Variables
 #
-# Refer to syslog-ng class for the variables defined here.
+# Refer to syslogng class for the variables defined here.
 #
 # == Usage
 #
 # This class is not intended to be used directly.
 # It may be imported or inherited by other classes
 #
-class syslog-ng::params {
+class syslogng::params {
 
   ### Application related parameters
 

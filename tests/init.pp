@@ -1,4 +1,4 @@
 # Default class installation
 #
-class { 'syslog-ng':
+class { 'syslogng':
 }

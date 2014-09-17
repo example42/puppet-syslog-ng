@@ -1,5 +1,5 @@
 # Class removal
 #
-class { 'syslog-ng':
+class { 'syslogng':
   absent => true,
 }
